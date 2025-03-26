@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Semáforo Receptor</title>
+  <style>
+    .semaforo { width: 60px; height: 60px; border-radius: 50%; background: gray; margin: 10px auto; }
+    .pantalla { font-size: 14px; background: black; color: white; padding: 5px; display: none; }
+  </style>
+</head>
+<body style="text-align:center; font-family:sans-serif">
+  <h1>Receptor de Semáforo</h1>
+  <div class="semaforo" id="led"></div>
+  <div class="pantalla" id="pantalla"></div>
+
+  <script>
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.onmessage = (event) => {
+      const tipo = event.data;
+      const led = document.getElementById('led');
+      const pantalla = document.getElementById('pantalla');
+
+      if (tipo === 'APAGAR') {
+        led.style.backgroundColor = 'gray';
+        pantalla.style.display = 'none';
+        pantalla.textContent = '';
+      } else {
+        led.style.backgroundColor = 'red';
+        pantalla.style.display = 'block';
+        pantalla.textContent = `ALTO ${tipo} PASANDO`;
+      }
+    };
+  </script>
+</body>
+</html>

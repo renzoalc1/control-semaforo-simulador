@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Control Semáforo</title>
+</head>
+<body style="text-align:center; font-family:sans-serif">
+  <h1>Control WebApp</h1>
+  <button onclick="enviar('PERFORADORA')">ALTO PERFORADORA</button>
+  <button onclick="enviar('CARGADOR')">ALTO CARGADOR</button>
+  <button onclick="enviar('CAMION')">ALTO CAMIÓN</button>
+  <button onclick="enviar('APAGAR')">APAGAR</button>
+
+  <script>
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.onopen = () => console.log('Conectado al servidor WebSocket');
+
+    function enviar(tipo) {
+      socket.send(tipo);
+    }
+  </script>
+</body>
+</html>
